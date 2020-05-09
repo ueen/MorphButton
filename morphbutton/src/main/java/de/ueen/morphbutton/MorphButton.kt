@@ -23,7 +23,7 @@ class MorphButton(context: Context, attrs: AttributeSet): MaterialButton(context
 
     private var prevMorph: MorphParams? = null
 
-    private var initialMorph: MorphParams
+    lateinit private var initialMorph: MorphParams
 
     private var currentColor = 0
 
@@ -44,8 +44,13 @@ class MorphButton(context: Context, attrs: AttributeSet): MaterialButton(context
         this@MorphButton.setBackgroundColor(currentColor)
         this@MorphButton.iconPadding = 0
         this@MorphButton.iconGravity = ICON_GRAVITY_TEXT_START
+}
+
+    override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
+        super.onLayout(changed, left, top, right, bottom)
 
         initialMorph = MorphParams(FRIST, currentColor,this@MorphButton.cornerRadius,this@MorphButton.width,this@MorphButton.height, this@MorphButton.icon, this@MorphButton.iconSize, text = this@MorphButton.text.toString(), duration = resources.getInteger(android.R.integer.config_shortAnimTime), textSize = this@MorphButton.textSize)
+
     }
 
     fun setOnClickListener(onClick: (it: MorphButton, morphId: String) -> Unit) {
@@ -149,7 +154,7 @@ class MorphButton(context: Context, attrs: AttributeSet): MaterialButton(context
                     animating = false
                     morphParams.text?.let { t ->
                         this@MorphButton.text = t
-                        ValueAnimator.ofInt(Color.TRANSPARENT, this@MorphButton.textColors.defaultColor).apply {
+                        ValueAnimator.ofInt(Color.TRANSPARENT, this@MorphButton.currentTextColor).apply {
                             setEvaluator(ArgbEvaluator())
                             duration = (resources.getInteger(android.R.integer.config_shortAnimTime) / 2).toLong()
                             addUpdateListener {
