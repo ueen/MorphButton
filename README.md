@@ -2,7 +2,7 @@
 
 Inspired by https://github.com/dmytrodanylyk/android-morphing-button
 
-Android Button that morphs to different shapes
+Android Button that morphs to different shapes, derived from MaterialButton & AndroidX
 
 Example
 <img src="ex1.gif" width="280"/>
