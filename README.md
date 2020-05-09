@@ -6,6 +6,7 @@ Android Button that morphs to different shapes
 
 Example
 
+
 ---
 
 ### Dependency
@@ -59,12 +60,13 @@ You can set everything as you need it (like: backgroundColor, icon, cornerRadius
 here are a few examples what you can do
 
 ```kotlin
-        one.setOnClickListener { it, morphId ->  
+        one.setOnClickListener { it, morphId ->
             when(morphId) {
                 MorphButton.FRIST -> {
                     it.morph(MorphButton.MorphParams("second",
                                                     circle = true,
                                                     icon = resources.getDrawable(R.drawable.ic_check_black_24dp, null),
+                                                    iconSize = it.height/3*2,
                                                     color = getColor(android.R.color.holo_green_light)
                             ))
                 }
@@ -73,12 +75,11 @@ here are a few examples what you can do
                 }
             }
         }
-
         two.setOnClickListener { it, morphId ->
             when(morphId) {
                 MorphButton.FRIST -> {
                     it.morph(MorphButton.MorphParams("second",
-                            width = it.width*2,
+                            width = it.width*3,
                             radius = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 8f, resources.displayMetrics).toInt(),
                             text = "clicked",
                             color = getColor(android.R.color.holo_blue_bright)
