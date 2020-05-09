@@ -1,6 +1,6 @@
 # MorphButton
 
-Inspiered by https://github.com/dmytrodanylyk/android-morphing-button
+Inspired by https://github.com/dmytrodanylyk/android-morphing-button
 
 Android Button that morphs to different shapes
 
