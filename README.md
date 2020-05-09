@@ -5,7 +5,7 @@ Inspired by https://github.com/dmytrodanylyk/android-morphing-button
 Android Button that morphs to different shapes
 
 Example
-<img src="ex1.gif"/>
+<img src="ex1.gif" width="380"/>
 
 ---
 
