@@ -28,7 +28,7 @@ Add the dependency
 ```gradle
 dependencies {
     // ... other dependencies
-    implementation 'com.github.ueen:MorphButton:1.0'
+    implementation 'com.github.ueen:MorphButton:1.1'
 }
 ```
 
