@@ -23,7 +23,7 @@ class MorphButton(context: Context, attrs: AttributeSet): MaterialButton(context
 
     private var prevMorph: MorphParams? = null
 
-    lateinit private var initialMorph: MorphParams
+    private var initialMorph: MorphParams? = null
 
     private var currentColor = 0
 
@@ -46,12 +46,7 @@ class MorphButton(context: Context, attrs: AttributeSet): MaterialButton(context
         this@MorphButton.iconGravity = ICON_GRAVITY_TEXT_START
 }
 
-    override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
-        super.onLayout(changed, left, top, right, bottom)
 
-        initialMorph = MorphParams(FRIST, currentColor,this@MorphButton.cornerRadius,this@MorphButton.width,this@MorphButton.height, this@MorphButton.icon, this@MorphButton.iconSize, text = this@MorphButton.text.toString(), duration = resources.getInteger(android.R.integer.config_shortAnimTime), textSize = this@MorphButton.textSize)
-
-    }
 
     fun setOnClickListener(onClick: (it: MorphButton, morphId: String) -> Unit) {
         super.setOnClickListener {
@@ -71,12 +66,17 @@ class MorphButton(context: Context, attrs: AttributeSet): MaterialButton(context
     }
 
     fun backToFirst(durationMS: Int? = null) {
-        val back = initialMorph
-        back.apply { duration = durationMS?:return }
-        morph(back)
+        initialMorph?.let {
+            morph(it.apply { duration = durationMS?:return })
+        }
+
     }
 
     fun morph(morphParams: MorphParams, onEnd: (morphId: String) -> Unit = {}) {
+        if (initialMorph == null) {
+            initialMorph = MorphParams(FRIST, currentColor,this@MorphButton.cornerRadius,this@MorphButton.width,this@MorphButton.height, this@MorphButton.icon, this@MorphButton.iconSize, text = this@MorphButton.text.toString(), duration = resources.getInteger(android.R.integer.config_shortAnimTime), textSize = this@MorphButton.textSize)
+        }
+
         val durationMS = (morphParams.duration)?: resources.getInteger(android.R.integer.config_shortAnimTime)
 
         prevMorph = MorphParams(currentId, currentColor,this@MorphButton.cornerRadius,this@MorphButton.width,this@MorphButton.height, this@MorphButton.icon, this@MorphButton.iconSize, text = this@MorphButton.text.toString(), duration = durationMS, keepText=morphParams.keepText, textSize = this@MorphButton.textSize)
@@ -175,4 +175,3 @@ class MorphButton(context: Context, attrs: AttributeSet): MaterialButton(context
 
     class MorphParams(val morphId: String, var color: Int? = null, var radius: Int? = null, var width: Int? = null, var height: Int? = null, var icon: Drawable? = null, var iconSize: Int? = null , var text: String? = null, var textSize: Float? = null, var circle: Boolean = false, var duration: Int? = null, var keepText: Boolean = false )
 }
-
