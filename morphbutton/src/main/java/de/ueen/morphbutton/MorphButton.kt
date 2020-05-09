@@ -61,20 +61,19 @@ class MorphButton(context: Context, attrs: AttributeSet): MaterialButton(context
         }
     }
 
-    fun reverse() {
-        prevMorph?.let { morph(it) }
+    fun reverse(onEnd: (morphId: String) -> Unit = {}) {
+        prevMorph?.let { morph(it,onEnd) }
     }
 
-    fun backToFirst(durationMS: Int? = null) {
+    fun backToFirst(durationMS: Int? = null, onEnd: (morphId: String) -> Unit = {}) {
         initialMorph?.let {
-            morph(it.apply { duration = durationMS?:return })
+            morph(it.apply { duration = durationMS },onEnd)
         }
-
     }
 
     fun morph(morphParams: MorphParams, onEnd: (morphId: String) -> Unit = {}) {
         if (initialMorph == null) {
-            initialMorph = MorphParams(FRIST, currentColor,this@MorphButton.cornerRadius,this@MorphButton.width,this@MorphButton.height, this@MorphButton.icon, this@MorphButton.iconSize, text = this@MorphButton.text.toString(), duration = resources.getInteger(android.R.integer.config_shortAnimTime), textSize = this@MorphButton.textSize)
+            initialMorph = MorphParams(FRIST, currentColor,this@MorphButton.cornerRadius,this@MorphButton.width,this@MorphButton.height, this@MorphButton.icon, this@MorphButton.iconSize, text = this@MorphButton.text.toString(), textSize = this@MorphButton.textSize)
         }
 
         val durationMS = (morphParams.duration)?: resources.getInteger(android.R.integer.config_shortAnimTime)
@@ -175,3 +174,4 @@ class MorphButton(context: Context, attrs: AttributeSet): MaterialButton(context
 
     class MorphParams(val morphId: String, var color: Int? = null, var radius: Int? = null, var width: Int? = null, var height: Int? = null, var icon: Drawable? = null, var iconSize: Int? = null , var text: String? = null, var textSize: Float? = null, var circle: Boolean = false, var duration: Int? = null, var keepText: Boolean = false )
 }
+
